@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875020901545",
+    "firebase_url": "https://text-detection-test-8fc72.firebaseio.com",
+    "project_id": "text-detection-test-8fc72",
+    "storage_bucket": "text-detection-test-8fc72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875020901545:android:1627e4c83e1ca340305db8",
+        "android_client_info": {
+          "package_name": "com.grocerynavigation_mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875020901545-jkfq2401vqbev0uqb2hjn2r3isqptdbq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSG_EweQ_u9iXNn_bhlxT2SlzUfPbjWsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875020901545-jkfq2401vqbev0uqb2hjn2r3isqptdbq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
