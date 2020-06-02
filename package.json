@@ -16,7 +16,7 @@
     "@react-navigation/stack": "^5.2.14",
     "native-base": "^2.13.12",
     "react": "16.11.0",
-    "react-native": "0.62.2",
+    "react-native": "^0.62.2",
     "react-native-ble-manager": "^7.2.0",
     "react-native-camera": "^3.24.2",
     "react-native-geolocation-service": "^4.0.1",
@@ -27,6 +27,7 @@
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
     "react-native-svg": "^12.1.0",
+    "react-native-svg-animations": "^0.2.1",
     "react-native-text-detector": "0.0.6",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.3.8"
@@ -39,6 +40,7 @@
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
+    "jetifier": "^1.6.5",
     "metro-react-native-babel-preset": "^0.58.0",
     "react-test-renderer": "16.11.0"
   },

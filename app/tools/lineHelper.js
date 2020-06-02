@@ -4,6 +4,12 @@ import { anchorPositions, mapTemplateWidth, mapTemplateHeight } from '../constan
 import { findShortestPath } from '../tools/mapHelper'
 import { Line } from 'react-native-svg';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { AnimatedSVGPath } from 'react-native-svg-animations';
+import {
+  View,
+} from 'react-native';
+
+
 
 
 export const drawLine = (startAnchor, endAnchor, referenceWidth, referenceHeight, key = "linekey", color="blue", strokeWidth=3) => {
@@ -69,13 +75,22 @@ export const iconPositions = (iconAnchor, referenceWidth, referenceHeight) => {
     if (!anchorPositions[iconAnchor]) {
         throw new Error("I haven't seen this icon anchor before");
     }
-
+    console.log('inside iconPositions')
     const {x: startX, y: startY} = anchorPositions[iconAnchor];
+    console.log('x and y', startX, startY)
+    console.log('ref width, heigh', referenceWidth, referenceHeight)
+    console.log('max width, heigh', mapTemplateWidth, mapTemplateHeight)
 
     const xStartRef = startX / mapTemplateWidth * referenceWidth;
     const yStartRef = startY / mapTemplateHeight * referenceHeight;
 
+
     console.log('xStartRef, yStartRef',xStartRef, yStartRef)
 
-    return <Icon name="md-person" size={24} style={{top: yStartRef - 12 , left: xStartRef - 12, position:"absolute"}}/>;
+
+    return <Icon name="md-person" size={24} style={{top: yStartRef - 5 , left: xStartRef - 5, position:"absolute"}}/>;
+ 
+    //console.log('d is: ', preloaderLines)
+    //return <View style={{top: yStartRef - 5 , left: xStartRef - 5, position:"absolute"}}><AnimatedSVGPath strokeColor={"red"} strokeWidth={5} duration={10000} height={yStartRef - 5} width={xStartRef - 5} scale={0.5} delay={100} d={preloaderLines}/></View>;
+    
 }

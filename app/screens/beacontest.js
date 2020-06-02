@@ -1,3 +1,4 @@
+
 import React, { PureComponent, Component, useCallback, useState } from 'react';
 import {
     StyleSheet,
@@ -22,14 +23,15 @@ const window = Dimensions.get('window');
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
 
-// export const BeaconTest = () => {
-//     return (
+/* export const BeaconTest = () => {
+     return (
 
-//         <View style={styles.container}>
-//             <Text style={{...styles.header, minHeight:20}}> Beacon Test </Text>
-//         </View>
-//     );
-// }
+         <View style={styles.container}>
+             <Text style={{...styles.header, minHeight:20}}> Beacon Test </Text>
+         </View>
+     );
+ }*/
+
 
 export class BeaconTest extends Component {
     constructor(){
@@ -151,11 +153,33 @@ export class BeaconTest extends Component {
         this.setState({ peripherals });
     }
 
+    // Calculates distance from RSSI and txPowerLevel. This function does not determine direction though.
+    calculateDistance(rssi, txPowerLevel) {
+        if (rssi == 0) {
+            return -1.0;
+        } else {
+            let ratio = rssi*1.0/txPowerLevel;
+            console.log('ratio is: ', ratio)
+            if (ratio < 1.0) {
+                console.log('if ans is: ', Math.pow(ratio,10))
+                return Math.pow(ratio,10);
+            } else {
+                let accuracy =  (0.89976)*Math.pow(ratio,7.7095) + 0.111;    
+                console.log('else ans is: ', accuracy)
+                return accuracy;
+            }
+        }
+    }
+
     test(peripheral) {
+        
         if (peripheral){
+            
         if (peripheral.connected){
+            
             BleManager.disconnect(peripheral.id);
         }else{
+            
             BleManager.connect(peripheral.id).then(() => {
             let peripherals = this.state.peripherals;
             let p = peripherals.get(peripheral.id);
@@ -164,53 +188,28 @@ export class BeaconTest extends Component {
                 peripherals.set(peripheral.id, p);
                 this.setState({peripherals});
             }
+
+
+            
+            console.log('Peripheral complete information: ' + peripheral);
             console.log('Connected to ' + peripheral.id);
+            console.log('The RSSI value of the peripheral is:  ' + peripheral.rssi);
+
+            // Get Beacon's distance
+            // calculateDistance(peripheral.rssi, peripheral.txPowerLevel) // This is returning NaN
+            
 
 
             setTimeout(() => {
 
-                /* Test read current RSSI value
+                /* Test read current RSSI value*/
+                
                 BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
                 console.log('Retrieved peripheral services', peripheralData);
                 BleManager.readRSSI(peripheral.id).then((rssi) => {
                     console.log('Retrieved actual RSSI value', rssi);
                 });
-                });*/
-
-                // Test using bleno's pizza example
-                // https://github.com/sandeepmistry/bleno/tree/master/examples/pizza
-                BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
-                console.log(peripheralInfo);
-                var service = '13333333-3333-3333-3333-333333333337';
-                var bakeCharacteristic = '13333333-3333-3333-3333-333333330003';
-                var crustCharacteristic = '13333333-3333-3333-3333-333333330001';
-
-                setTimeout(() => {
-                    BleManager.startNotification(peripheral.id, service, bakeCharacteristic).then(() => {
-                    console.log('Started notification on ' + peripheral.id);
-                    setTimeout(() => {
-                        BleManager.write(peripheral.id, service, crustCharacteristic, [0]).then(() => {
-                        console.log('Writed NORMAL crust');
-                        BleManager.write(peripheral.id, service, bakeCharacteristic, [1,95]).then(() => {
-                            console.log('Writed 351 temperature, the pizza should be BAKED');
-                            /*
-                            var PizzaBakeResult = {
-                            HALF_BAKED: 0,
-                            BAKED:      1,
-                            CRISPY:     2,
-                            BURNT:      3,
-                            ON_FIRE:    4
-                            };*/
-                        });
-                        });
-
-                    }, 500);
-                    }).catch((error) => {
-                    console.log('Notification error', error);
-                    });
-                }, 200);
                 });
-
             }, 900);
             }).catch((error) => {
             console.log('Connection error', error);
@@ -220,6 +219,7 @@ export class BeaconTest extends Component {
     }
 
     renderItem(item) {
+        
         const color = item.connected ? 'green' : '#fff';
         return (
         <TouchableHighlight onPress={() => this.test(item) }>
